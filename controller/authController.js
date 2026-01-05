@@ -11,29 +11,9 @@ export const signup = async (req,res) =>{
             return res.status(422).json({success: false , message :"All fields required"});
         }
         const userExists = await User.findOne({email:email});
-        // CASE 1 - if user is already verified
         if(userExists){
-            if(userExists.isVerified){
-                return res.status(409).json({success : false , message: "User already exists. Please login."})
-            }
-            //not verified
-            const now = Date.now();
-            if(now < userExists.verificationCodeExpiry ){
-                  return res.status(200).json({success :false , message : "Otp already sent , Please verify your email"})
-            }
-             var newotp = Math.floor(100000 + Math.random() *900000).toString();
-             var newExpiry  = new Date(Date.now() + 10 * 60 * 1000);
-
-             userExists.verificationCode = newotp;
-             userExists.verificationCodeExpiry = newExpiry;
-
-             await userExists.save();
-             sendVerificationCode(userExists.email, newOtp);
-
-            return res.status(200).json({success: true,message: "New OTP sent to your email."});
+            return res.status(200).json({success: true,message: "User Already Exists."});
         }
-
-       //CASE-2 : New user signup
         const hashPassword = await bcrypt.hash(password , 10);
         const verificationCode = Math.floor(100000 + Math.random() *900000).toString();
         const expiryTime = new Date(Date.now() + 10 * 60 * 1000);
@@ -76,7 +56,7 @@ export const login = async (req,res) =>{
         user.refreshToken = refreshToken;
         await user.save();
 
-        return res.status(200).json({success :true , message :`Welcome ${user.name}` ,accessToken :accessToken ,refreshToken :refreshToken});
+        return res.status(200).json({success :true , message :`Welcome ${user.name}` ,accessToken :accessToken ,refreshToken});
 
     }
     catch(err){
