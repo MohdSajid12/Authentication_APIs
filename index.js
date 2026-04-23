@@ -3,11 +3,13 @@ import dotenv from "dotenv";
 import dbConnect from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import multer from 'multer';
+import cors from "cors";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000
 
+app.use(cors());
 app.use(express.json()); //yh json me ane wale data ko parse krke req.body me dalta h
 app.use(express.urlencoded({extended :false})) //this is middleware form data ko parse krne me help
 // krta h jo hum form data se data send krte h
