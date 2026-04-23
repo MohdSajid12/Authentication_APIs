@@ -57,7 +57,6 @@ export const login = async (req,res) =>{
         await user.save();
 
         return res.status(200).json({success :true , message :`Welcome ${user.name}` ,accessToken :accessToken ,refreshToken});
-
     }
     catch(err){
         console.log(err);
@@ -93,7 +92,6 @@ export const verifyEmail = async(req,res)=>{
       await user.save();
       return res.status(200).json({success: true , message : "Email verified successfully"});
       
-
     }
     catch(error){
         console.log(error);
@@ -131,5 +129,15 @@ export const resendOtp = async(req,res)=>{
     catch(error){
         console.log(error);
         return res.status(500).json({success : false , message : `Something went wrong ${error.message}`})
+    }
+}
+
+export const logout =  async (req,res)=>{
+    try{
+
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({success : false , message :`Something went wront ${error.message}`})
     }
 }

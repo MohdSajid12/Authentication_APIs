@@ -14,6 +14,10 @@ app.use(express.urlencoded({extended :false})) //this is middleware form data ko
 
 app.use("/auth" , authRoutes);
 
+app.get("/", (req, res) => {
+  res.send("API is running...");
+});
+
 app.listen(PORT ,()=>{
     console.log(`server is running on the port ${PORT}`);
     dbConnect();
