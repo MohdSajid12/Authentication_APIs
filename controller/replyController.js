@@ -89,3 +89,31 @@ export const getUserReplies = async (req, res) => {
     });
   }
 };
+
+export const deleteReply = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+     await Reply.findByIdAndDelete(id);
+     res.json({ success: true, message: "Deleted successfully" });
+    } catch (err) {
+        res.status(500).json({ success: false, message: err.message });
+    }
+};
+
+export const updateReply = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { replyText } = req.body;
+
+    const updated = await Reply.findByIdAndUpdate(
+      id,
+      { replyText },
+      { new: true }
+    );
+
+    res.json({ success: true, reply: updated });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};

@@ -8,5 +8,7 @@ const router = express.Router();
 router.post("/generate-reply", generateReply);
 router.post("/save", verifyToken, saveReply);
 router.get("/replies", verifyToken, getUserReplies);
+router.delete("/delete/:id", verifyToken, deleteReply);
+router.put("/update/:id", verifyToken, updateReply);
 
 export default router;
