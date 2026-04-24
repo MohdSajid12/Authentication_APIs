@@ -1,5 +1,5 @@
 import express from "express";
-import { generateReply ,saveReply ,getUserReplies} from "../controller/replyController.js"
+import { generateReply ,saveReply ,getUserReplies,deleteReply , updateReply} from "../controller/replyController.js"
 import { verifyToken } from "../middleware/authMiddleware.js";
 
 
