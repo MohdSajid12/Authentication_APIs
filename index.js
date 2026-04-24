@@ -4,6 +4,7 @@ import dbConnect from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import multer from 'multer';
 import cors from "cors";
+import replyRoutes from "./routes/replyRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended :false})) //this is middleware form data ko
 // krta h jo hum form data se data send krte h
 
 app.use("/auth" , authRoutes);
+app.use("/api/reply", replyRoutes);
 
 app.get("/", (req, res) => {
   res.send("API is running...");

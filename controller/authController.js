@@ -81,7 +81,7 @@ export const verifyEmail = async(req,res)=>{
          return res.status(401).json({success: false , message : "Invalid OTP"});
       }
 
-      if(Date.now > user.verificationCodeExpiry){
+      if(Date.now() > user.verificationCodeExpiry){
             return res.status(400).json({success : false , message : "OTP expired"});
       }
 
