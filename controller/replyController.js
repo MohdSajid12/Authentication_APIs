@@ -5,8 +5,10 @@ const openai = new OpenAI({
 });
 
 export const generateReply = async (req, res) => {
+
   try {
     const { emailText, tone } = req.body;
+    console.log(emailText)
 
     if (!emailText) {
       return res.status(400).json({success: false, message: "Email text required", });
@@ -43,8 +45,7 @@ export const generateReply = async (req, res) => {
     return res.json({ success: true,reply,});
 
   } catch (error) {
-    console.log(error);
 
-    return res.status(500).json({ success: false,message: "AI generation failed",});
+    return res.status(500).json({ success: false,message: error.message,});
   }
 };
