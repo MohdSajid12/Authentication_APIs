@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import Reply from "../models/replyModel.js";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -47,5 +48,25 @@ export const generateReply = async (req, res) => {
   } catch (error) {
 
     return res.status(500).json({ success: false,message: error.message,});
+  }
+};
+
+export const saveReply = async (req, res) => {
+  try {
+    const { emailText, tone, replyText } = req.body;
+    const userId = req.user.id; 
+
+    if (!emailText || !replyText) {
+      return res.status(400).json({success: false,message: "Missing data",});
+    }
+
+    const newReply = new Reply({ userId,emailText, tone,replyText,});
+
+    await newReply.save();
+
+    return res.json({ success: true,message: "Reply saved successfully",});
+
+  } catch (err) {
+    return res.status(500).json({ success: false,message: err.message,});
   }
 };
