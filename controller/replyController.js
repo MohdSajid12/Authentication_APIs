@@ -9,10 +9,7 @@ export const generateReply = async (req, res) => {
     const { emailText, tone } = req.body;
 
     if (!emailText) {
-      return res.status(400).json({
-        success: false,
-        message: "Email text required",
-      });
+      return res.status(400).json({success: false, message: "Email text required", });
     }
 
     const prompt = `
