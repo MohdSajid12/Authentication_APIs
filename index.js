@@ -9,8 +9,11 @@ import replyRoutes from "./routes/replyRoutes.js";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000
-
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}));
 app.use(express.json()); //yh json me ane wale data ko parse krke req.body me dalta h
 app.use(express.urlencoded({extended :false})) //this is middleware form data ko parse krne me help
 // krta h jo hum form data se data send krte h

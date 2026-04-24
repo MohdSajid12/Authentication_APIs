@@ -54,7 +54,7 @@ export const generateReply = async (req, res) => {
 export const saveReply = async (req, res) => {
   try {
     const { emailText, tone, replyText } = req.body;
-    const userId = req.user.id; 
+    const userId = req.user._id; 
 
     if (!emailText || !replyText) {
       return res.status(400).json({success: false,message: "Missing data",});
