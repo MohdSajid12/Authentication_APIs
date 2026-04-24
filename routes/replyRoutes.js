@@ -1,7 +1,6 @@
 import express from "express";
-import { generateReply } from "../controller/replyController.js"
+import { generateReply ,saveReply } from "../controller/replyController.js"
 import { verifyToken } from "../middleware/authMiddleware.js";
-import { saveReply } from "../controllers/replyController.js";
 
 
 const router = express.Router();
