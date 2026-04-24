@@ -70,3 +70,22 @@ export const saveReply = async (req, res) => {
     return res.status(500).json({ success: false,message: err.message,});
   }
 };
+
+export const getUserReplies = async (req, res) => {
+  try {
+    const userId = req.user._id;
+
+    const replies = await Reply.find({ userId }).sort({ createdAt: -1 });
+
+    return res.json({
+      success: true,
+      replies,
+    });
+
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: err.message,
+    });
+  }
+};
