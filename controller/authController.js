@@ -15,16 +15,21 @@ export const signup = async (req,res) =>{
             return res.status(200).json({success: true,message: "User Already Exists."});
         }
         const hashPassword = await bcrypt.hash(password , 10);
-        const verificationCode = Math.floor(100000 + Math.random() *900000).toString();
-        const expiryTime = new Date(Date.now() + 10 * 60 * 1000);
+        // const verificationCode = Math.floor(100000 + Math.random() *900000).toString();
+        // const expiryTime = new Date(Date.now() + 10 * 60 * 1000);
         //date now current time then 10 minute ko second me convert then millsecond me convert
         //new date ek object h timetamp ko date object bna deta h 10.00 Am
-        const user = new User({
-            name , email , password : hashPassword ,verificationCode ,verificationCodeExpiry :expiryTime
+        // const user = new User({
+        //     name , email , password : hashPassword ,verificationCode ,verificationCodeExpiry :expiryTime
+        // });
+
+         const user = new User({
+            name , email , password : hashPassword 
         });
         await user.save();
-        sendVerificationCode(user.email , verificationCode);
-        return res.status(200).json({success: true, message: "Please verify your email using the OTP sent to your registered email address."});
+        // sendVerificationCode(user.email , verificationCode);
+        // return res.status(200).json({success: true, message: "Please verify your email using the OTP sent to your registered email address."});
+         return res.status(200).json({success: true, message: "Signup successful"});
     }
     catch(err){
        console.log(err);
@@ -42,9 +47,9 @@ export const login = async (req,res) =>{
         if(!user){
             return res.status(404).json({success : false , message : "User not found"});
         }
-        if(!user.isVerified){
-            return res.status(401).json({success :false , message : "Verify Email first"})
-        }
+        // if(!user.isVerified){
+        //     return res.status(401).json({success :false , message : "Verify Email first"})
+        // }
         const isMatchPassword = await bcrypt.compare(password, user.password);
         if(!isMatchPassword){
             return res.status(401).json({success : false , message : "Invalid credentials"});
@@ -84,7 +89,7 @@ export const verifyEmail = async(req,res)=>{
       if(Date.now() > user.verificationCodeExpiry){
             return res.status(400).json({success : false , message : "OTP expired"});
       }
-
+      
       user.isVerified = true;
       user.verificationCode = null;
       user.verificationCodeExpiry = null;
